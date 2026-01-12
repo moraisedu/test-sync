@@ -1,5 +1,6 @@
 name: Sync to Company Repo
- on:
+
+on:
   push:
     branches:
       - main
@@ -22,6 +23,10 @@ jobs:
 
       - name: Push to company repo
         run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
           git remote remove company || true
-          git remote add company git@github.com:/greenparktech/test-sync.git
+          git remote add company git@github.com:greenparktech/test-sync.git
+          git fetch company master
+          git rebase company/master
           git push company main:master
