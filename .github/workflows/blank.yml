@@ -1,20 +1,27 @@
 name: Sync to Company Repo
- 
-on:
+ on:
   push:
     branches:
       - main
- 
+
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout personal repo
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
- 
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.COMPANY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       - name: Push to company repo
         run: |
-          git remote add company https://x-access-token:${{secrets.TOKEN}}@github.com/greenparktech/test-sync.git
+          git remote remove company || true
+          git remote add company git@github.com:/greenparktech/test-sync.git
           git push company main:master
