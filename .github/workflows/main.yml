@@ -1,5 +1,6 @@
 name: Sync to Company Repo
- on:
+
+on:
   push:
     branches:
       - main
@@ -23,5 +24,5 @@ jobs:
       - name: Push to company repo
         run: |
           git remote remove company || true
-          git remote add company git@github.com:/greenparktech/test-sync.git
+          git remote add company git@github.com:greenparktech/test-sync.git
           git push company main:master
