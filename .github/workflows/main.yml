@@ -25,4 +25,6 @@ jobs:
         run: |
           git remote remove company || true
           git remote add company git@github.com:greenparktech/test-sync.git
+          git fetch company master
+          git rebase company/master
           git push company main:master
