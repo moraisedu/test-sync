@@ -16,7 +16,7 @@ jobs:
  
       - name: Push to company repo
         env:
-          COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
+          COMPANY_TOKEN: ${{ secrets.TOKEN }}
         run: |
           git remote add company https://x-access-token:${COMPANY_TOKEN}@github.com/greenparktech/test-sync.git
           git push company main:master
